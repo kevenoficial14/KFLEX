@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFLEX - Keven Fernandes Literatura Exclusiva</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #5D5CDE;
+            --primary-light: #7A79E3;
+            --primary-dark: #4847B3;
+            --gold-accent: #D4AF37;
+            --gold-light: #F0E68C;
+            --gold-dark: #B8860B;
+            --black: #000000;
+            --black-soft: #111111;
+            --white: #FFFFFF;
+            --white-off: #F9F9F9;
+            --gray-100: #F8F9FA;
+            --gray-200: #E9ECEF;
+            --gray-300: #DEE2E6;
+            --gray-400: #CED4DA;
+            --gray-500: #ADB5BD;
+            --gray-600: #6C757D;
+            --gray-700: #495057;
+            --gray-800: #343A40;
+            --gray-900: #212529;
+            --dark-bg: #181818;
+            --dark-card: #252525;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--white);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+        
+        .dark body {
+            background-color: var(--dark-bg);
+            color: var(--gray-300);
+        }
+        
+        header {
+            background: var(--white);
+            color: var(--gray-800);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .dark header {
+            background: var(--dark-bg);
+            color: var(--white);
+            border-bottom: 1px solid var(--gray-800);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .logo-image {
+            width: 160px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--gray-600);
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .dark .tagline {
+            color: var(--gray-400);
+        }
+        
+        /* Navigation Menu */
+        .nav-container {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            background-color: var(--white-off);
+            border-radius: 30px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark .nav-menu {
+            background-color: var(--gray-900);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-item {
+            position: relative;
+            margin: 0 0.25rem;
+        }
+        
+        .nav-link {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-decoration: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .dark .nav-link {
+            color: var(--gray-400);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-link.active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 2px 10px rgba(93, 92, 222, 0.3);
+        }
+        
+        .dark .nav-link.active {
+            box-shadow: 0 2px 10px rgba(93, 92, 222, 0.5);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .section {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.75rem;
+            display: inline-block;
+        }
+        
+        .dark .section-title {
+            color: var(--primary-light);
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        
+        .books-grid, .education-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (min-width: 768px) {
+            .books-grid, .education-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .book-section, .education-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dark .book-section, .dark .education-item {
+            background: var(--dark-card);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .book-section:hover, .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .book-section:hover, .dark .education-item:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .book-section::before, .education-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .book-title, .education-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .dark .book-title, .dark .education-title {
+            color: var(--white);
+        }
+        
+        .book-title::after, .education-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .book-content, .education-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+        }
+        
+        @media (min-width: 992px) {
+            .book-content {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+        
+        .book-cover, .education-cover {
+            flex-shrink: 0;
+            position: relative;
+            width: 100%;
+            max-width: 180px;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 992px) {
+            .book-cover {
+                width: 40%;
+                margin: 0;
+            }
+        }
+        
+        .book-image, .education-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            object-fit: cover;
+            aspect-ratio: 2/3;
+        }
+        
+        .dark .book-image, .dark .education-image {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .book-image:hover, .education-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .book-image:hover, .dark .education-image:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .book-details, .education-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .coming-soon {
+            background: var(--gold-accent);
+        }
+        
+        .available {
+            background: var(--primary);
+        }
+        
+        .education {
+            background: var(--primary);
+        }
+        
+        .release-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            margin-bottom: 1.25rem;
+            font-style: italic;
+        }
+        
+        .dark .release-date {
+            color: var(--gray-400);
+        }
+        
+        .sinopse-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gray-800);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .dark .sinopse-title {
+            color: var(--gray-300);
+        }
+        
+        .sinopse, .education-description {
+            text-align: justify;
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--gray-700);
+            line-height: 1.6;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dark .sinopse, .dark .education-description {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--gray-400);
+        }
+        
+        .education-item {
+            text-align: center;
+        }
+        
+        .education-content {
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .education-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            opacity: 0.8;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .education-item:hover .education-icon {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        
+        .education-description {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .access-button, .education-button {
+            margin-top: auto;
+            align-self: center;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            background: var(--primary);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(93, 92, 222, 0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .access-button:hover, .education-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(93, 92, 222, 0.3);
+            background: var(--primary-dark);
+        }
+        
+        .button-icon {
+            font-size: 1rem;
+        }
+        
+        .pre-order-button {
+            margin-top: auto;
+            align-self: center;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .pre-order-button:hover {
+            background: rgba(93, 92, 222, 0.05);
+            transform: translateY(-3px);
+        }
+        
+        .about-section {
+            margin-top: 4rem;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark .about-section {
+            background: var(--dark-card);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .about-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .dark .about-title {
+            color: var(--primary-light);
+        }
+        
+        .about-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .about-text {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-700);
+            text-align: center;
+            line-height: 1.8;
+            position: relative;
+            padding: 0 1.5rem;
+        }
+        
+        .dark .about-text {
+            color: var(--gray-400);
+        }
+        
+        footer {
+            margin-top: 4rem;
+            background: var(--white-off);
+            color: var(--gray-600);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .dark footer {
+            background: var(--gray-900);
+            color: var(--gray-400);
+            border-top: 1px solid var(--gray-800);
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        
+        .footer-divider {
+            height: 1px;
+            width: 100px;
+            background: var(--gray-300);
+            margin: 1.25rem auto;
+        }
+        
+        .dark .footer-divider {
+            background: var(--gray-700);
+        }
+        
+        .copyright {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+        
+        .dark .copyright {
+            color: var(--gray-500);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://pfst.cf2.poecdn.net/base/image/5f77effef3ab280e7ff6649270620c5d7b9b3e55ba1ef59331d6e89a1ff8e3ac?w=1024&h=768" alt="KFLEX Logo" class="logo-image">
+        </div>
+        
+        <div class="tagline">Keven Fernandes Literatura Exclusiva</div>
+        
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-section="biblioteca">Biblioteca</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="educacao">Educação</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="sobre">Sobre</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Seção Biblioteca -->
+        <div id="biblioteca" class="section active">
+            <div class="header-section">
+                <h2 class="section-title">Nossa Biblioteca</h2>
+            </div>
+            
+            <div class="books-grid">
+                <!-- Livro 1: Entre a Coroa e o Coração -->
+                <div class="book-section">
+                    <h2 class="book-title">Entre a Coroa e o Coração</h2>
+                    
+                    <div class="book-content">
+                        <div class="book-cover">
+                            <img class="book-image" src="https://pfst.cf2.poecdn.net/base/image/5083c36cbba4f3374a7c913045401d4bd953bef502cd43c2f84bf67492f70309?w=343&h=501" alt="Capa do livro Entre a Coroa e o Coração">
+                        </div>
+                        
+                        <div class="book-details">
+                            <div class="status-badge coming-soon">Em Breve</div>
+                            <div class="release-date">Lançamento: 21 dezembro 2024</div>
+                            <h3 class="sinopse-title">Sinopse</h3>
+                            <div class="sinopse">
+                                <p>No Reino de Élaris, a jovem princesa Isabella Valderis, de 12 anos, vê sua vida mudar ao conhecer Lucas, um plebeu de 13 anos que trabalha nos estábulos do castelo. Entre encontros secretos e um sentimento proibido, eles desafiam as tradições da coroa. Mas quando segredos e conspirações ameaçam separá-los, Isabella e Lucas precisarão decidir entre o dever e o verdadeiro amor.</p>
+                            </div>
+                            <a href="#" class="pre-order-button">
+                               
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Livro 2: A Vida de John -->
+                <div class="book-section">
+                    <h2 class="book-title">A Vida de John</h2>
+                    
+                    <div class="book-content">
+                        <div class="book-cover">
+                            <img class="book-image" src="https://pfst.cf2.poecdn.net/base/image/ba1f0aa7955e901200110262f75999049651ee23adc1e63c6cac5f72990354d8?w=324&h=493" alt="Capa do livro A Vida de John">
+                        </div>
+                        
+                        <div class="book-details">
+                            <div class="status-badge available">Disponível</div>
+                            <h3 class="sinopse-title">Sinopse</h3>
+                            <div class="sinopse">
+                                <p>Este livro narra a jornada de John Williams em busca de seu sonho de se tornar um agente do FBI, enquanto equilibra desafios profissionais e pessoais. A história destaca seu amor por Lily e seu filho, Theodor, ressaltando a importância da família e do apoio mútuo. Ao longo do livro, testemunhamos suas conquistas, desde o pedido de casamento até o nascimento de Theodor, culminando em uma narrativa inspiradora sobre amor, resiliência e determinação.</p>
+                            </div>
+                            <a href="https://www.canva.com/design/DAGH7I5OBgA/FlSzwXEZBrhtvQt-XfyXSg/edit?utm_content=DAGH7I5OBgA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" class="access-button">
+                                <i class="fas fa-book-open button-icon"></i>
+                                Acessar o livro
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção Educação -->
+        <div id="educacao" class="section">
+            <div class="header-section">
+                <h2 class="section-title">Educação</h2>
+            </div>
+            
+            <div class="education-grid">
+                <!-- Material 1: O papel da escola na formação ética e cidadã -->
+                <div class="education-item">
+                    <h2 class="education-title">O papel da escola na formação ética e cidadã dos alunos</h2>
+                    
+                    <div class="education-content">
+                        <i class="fas fa-graduation-cap education-icon"></i>
+                        
+                        <div class="education-description">
+                            <p>Um estudo aprofundado sobre como as instituições educacionais podem formar cidadãos éticos e conscientes. Aborda métodos e práticas para desenvolver valores fundamentais nos estudantes.</p>
+                        </div>
+                        
+                        <a href="https://www.canva.com/design/DAGmO6FJ7rc/JOH0_tEOJxGwLvYySDXmTg/edit?utm_content=DAGmO6FJ7rc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" class="education-button">
+                            <i class="fas fa-external-link-alt button-icon"></i>
+                            Acessar material
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Material 2: O Professor que plantava sonhos -->
+                <div class="education-item">
+                    <h2 class="education-title">O Professor que plantava sonhos</h2>
+                    
+                    <div class="education-content">
+                        <i class="fas fa-seedling education-icon"></i>
+                        
+                        <div class="education-description">
+                            <p>Uma abordagem inspiradora sobre o papel transformador dos professores na vida dos alunos. Este material explora como educadores podem inspirar e cultivar sonhos em suas salas de aula.</p>
+                        </div>
+                        
+                        <a href="https://www.canva.com/design/DAGmJPP-jgo/yN9-21J2XsG8_BzC-dButg/edit?utm_content=DAGmJPP-jgo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" class="education-button">
+                            <i class="fas fa-external-link-alt button-icon"></i>
+                            Acessar material
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Material 3: O SAEB e seus impactos -->
+                <div class="education-item">
+                    <h2 class="education-title">O SAEB e seus impactos na qualidade da educação no Brasil</h2>
+                    
+                    <div class="education-content">
+                        <i class="fas fa-chart-line education-icon"></i>
+                        
+                        <div class="education-description">
+                            <p>Análise detalhada sobre o Sistema de Avaliação da Educação Básica (SAEB) e como suas métricas e resultados influenciam as políticas educacionais e a qualidade do ensino no país.</p>
+                        </div>
+                        
+                        <a href="https://www.canva.com/design/DAGmIaausgw/MlDSEd7KzNt3l_UcnEieng/edit?utm_content=DAGmIaausgw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" class="education-button">
+                            <i class="fas fa-external-link-alt button-icon"></i>
+                            Acessar material
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Material 4: Os desafios da valorização do professor -->
+                <div class="education-item">
+                    <h2 class="education-title">Os desafios da valorização do professor na sociedade contemporânea</h2>
+                    
+                    <div class="education-content">
+                        <i class="fas fa-user-tie education-icon"></i>
+                        
+                        <div class="education-description">
+                            <p>Este material discute os principais obstáculos para a valorização profissional dos educadores e apresenta caminhos para o reconhecimento adequado desses profissionais essenciais.</p>
+                        </div>
+                        
+                        <a href="https://www.canva.com/design/DAGmIJkwhRc/0Xwh8cfz2RLXN3PwPmnyHA/edit?utm_content=DAGmIJkwhRc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" class="education-button">
+                            <i class="fas fa-external-link-alt button-icon"></i>
+                            Acessar material
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Material 5: Automação do Ensino e Pedagogia -->
+                <div class="education-item">
+                    <h2 class="education-title">Automação do Ensino e Pedagogia: Avanços, Desafios e Impactos Reais</h2>
+                    
+                    <div class="education-content">
+                        <i class="fas fa-robot education-icon"></i>
+                        
+                        <div class="education-description">
+                            <p>Uma exploração sobre como a tecnologia e automação estão transformando os métodos pedagógicos. O material aborda benefícios, desafios e considerações éticas dessa evolução no campo educacional.</p>
+                        </div>
+                        
+                        <a href="https://www.canva.com/design/DAGlYcS_97g/jRS5juBROfQACT1hfbmnyg/edit?utm_content=DAGlYcS_97g&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" class="education-button">
+                            <i class="fas fa-external-link-alt button-icon"></i>
+                            Acessar material
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção Sobre -->
+        <div id="sobre" class="section">
+            <div class="about-section">
+                <h2 class="about-title">Sobre o KFLEX</h2>
+                
+                <div class="about-text">
+                    <p>O KFLEX é um espaço dedicado à literatura de alta qualidade e conteúdo educacional, trazendo histórias cativantes e materiais informativos para leitores e educadores. Nossa missão é promover o amor pela leitura e oferecer narrativas envolventes que transportam os leitores para novas realidades, além de recursos educacionais que contribuem para o desenvolvimento pessoal e profissional.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">KFLEX</div>
+            <div class="footer-divider"></div>
+            <div class="copyright">© 2025 KFLEX - Keven Fernandes Literatura Exclusiva. Todos os direitos reservados.</div>
+        </div>
+    </footer>
+    
+    <script>
+        // Toggle between sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Get section ID from data attribute
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // Hide all sections
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show the selected section with animation
+                    setTimeout(() => {
+                        document.getElementById(sectionId).classList.add('active');
+                    }, 50);
+                });
+            });
+        });
+        
+        // Support for dark/light mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+</body>
+</html>
+
